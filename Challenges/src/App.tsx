@@ -4,6 +4,7 @@ import Home from './Home';
 import Counter from './Counter'
 import ProgressBar from './ProgressBar'
 import FileExplorer from './FileExplorer';
+import DependentDropDown from './DependentDropDown';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/counter" element={<Counter />} />
           <Route path="/progress-bar" element={<ProgressBar />} />
           <Route path='/file-explorer' element={<FileExplorer />} />
+          <Route path='/dropdown' element={<DependentDropDown/>} />
         </Routes>
       </BrowserRouter>
     </>
