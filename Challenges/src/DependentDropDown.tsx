@@ -1,4 +1,5 @@
-import {useState} from 'react'
+import {useState} from 'react';
+import './DependedDropDown.css';
 
 function DependentDropDown() {
 
@@ -22,10 +23,10 @@ function DependentDropDown() {
 
   return (
     <div className='dropdown__container'>
-         <select className='select' id='category' onChange={(e) => handleCategoryChange(e.target.value)} value={categories}>
-                        {/* <option value="">
-                            Fruits
-                        </option> */}
+        <h3>Dependent Drop Down</h3>
+        <div className='dropdown__content'>
+        <select className='select' id='category' onChange={(e) => handleCategoryChange(e.target.value)} value={categories}>
+                        
                         {
                             category.map((item) => (
                                 <option key={item} value={item}>
@@ -34,19 +35,21 @@ function DependentDropDown() {
                             ))
                         }
                     </select>
-                    <br/>
+
                     <select className='select' id='subCategory' onChange={(e) => setSubCategory(e.target.value)} value={subCategory} disabled={!isSubCategoryEnabled}>
-                        {/* <option value="">
+                        <option className="my-select-menu" value="">
                             Select
-                        </option> */}
+                        </option>
                         {isSubCategoryEnabled &&
                             subCategories[categories].map((subItem) => (
-                                <option key={subItem} value={subItem}>
+                                <option className="option" key={subItem} value={subItem}>
                                     {subItem}
                                 </option>
                             ))
                         }
                     </select>
+        </div>
+         
     </div>
   )
 }
