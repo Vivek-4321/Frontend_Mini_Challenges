@@ -5,6 +5,7 @@ import Counter from './Counter'
 import ProgressBar from './ProgressBar'
 import FileExplorer from './FileExplorer';
 import DependentDropDown from './DependentDropDown';
+import MultiStepForm from './MultiStepForm/MultiStepForm';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/progress-bar" element={<ProgressBar />} />
           <Route path='/file-explorer' element={<FileExplorer />} />
           <Route path='/dropdown' element={<DependentDropDown/>} />
+          <Route path='/multi-step-form' element={<MultiStepForm />} />
         </Routes>
       </BrowserRouter>
     </>
