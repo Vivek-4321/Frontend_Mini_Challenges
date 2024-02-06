@@ -27,9 +27,10 @@ function ProgressBar() {
 
   return (
     <div className='progress-bar__warpper'>
+      <h3 className='progress-bar__title'>Progress Bar</h3>
       <div className='progress-bar__container'>
         <div className='progress-bar__bar' style={{ width: `${value}%` }}>
-          <span  style={{
+          <span className="progress-bar__percentage" style={{
           color: value > 49 ? "white" : "black"
         }} >{value.toFixed()}%</span>
         </div>
