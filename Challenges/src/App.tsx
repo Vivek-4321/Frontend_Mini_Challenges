@@ -6,6 +6,7 @@ import ProgressBar from './ProgressBar'
 import FileExplorer from './FileExplorer';
 import DependentDropDown from './DependentDropDown';
 import MultiStepForm from './MultiStepForm/MultiStepForm';
+import Stepper from './Stepper/Stepper';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path='/file-explorer' element={<FileExplorer />} />
           <Route path='/dropdown' element={<DependentDropDown/>} />
           <Route path='/multi-step-form' element={<MultiStepForm />} />
+          <Route path='/react-stepper' element={<Stepper/>} />
         </Routes>
       </BrowserRouter>
     </>
