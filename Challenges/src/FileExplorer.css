@@ -24,6 +24,18 @@
     color: white;
 }
 
+.file__page{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file__page__icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .file_explorer__wrapper{
     width: 100%;
     height: 100vh;
@@ -47,6 +59,17 @@
 }
 
 .folder-button:hover{
+    scale: 1.2;
+}
+
+.folder-button__page{
+    margin-left: 10px;
+    border: none;
+    background-color: rgb(23, 23, 23);
+    transition: all 0.2s ease-in-out;
+}
+
+.folder-button__page:hover{
     scale: 1.2;
 }
 

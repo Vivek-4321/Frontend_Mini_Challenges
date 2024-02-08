@@ -37,18 +37,13 @@ function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, hand
     }
   }
 
-  const handleDeletenode = (folderId) => {
-    const finalTree = handleDeleteNode(explorer, folderId);
-    setExpand(false);
-  }
+  const handleDeletenode = (e,folderId) => {
+    e.stopPropagation();
+    handleDeleteNode(folderId);
+  };
 
   const handleRenamenode = (folderId, newName) => {
     const finalTree = handleRenameNode(explorer, folderId, newName);
-    setExpand(false);
-  }
-
-  const onDeleteNode = (folderId) => {
-    const finalTree = handleDeleteNode(explorer, folderId);
     setExpand(false);
   }
 
@@ -62,8 +57,8 @@ function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, hand
               <div>
                 <button className="folder-button" onClick={(e) => handleNewFolder(e, true)}><TiFolderAdd /></button>
                 <button className="folder-button" onClick={(e) => handleNewFolder(e, false)}><FiFilePlus /></button>
-                {/* <button className="folder-button" onClick={(e) => handleRenamenode(explorer.id, e.target.value)}><IoPencilSharp /></button>
-                <button className="folder-button" onClick={() => handleDeletenode(explorer.id)}><MdDeleteOutline /></button> */}
+                <button className="folder-button" onClick={(e) => handleRenamenode(explorer.id, e.target.value)}><IoPencilSharp /></button>
+                <button className="folder-button" onClick={(e) => handleDeletenode(e,explorer.id)}><MdDeleteOutline /></button>
               </div>
             </IconContext.Provider>
           </div>
@@ -86,6 +81,7 @@ function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, hand
               return (
                 <Folder
                   handleInsertNode={handleInsertNode}
+                  handleDeleteNode={handleDeleteNode}
                   key={exp.id}
                   explorer={exp}
                 />
@@ -95,7 +91,19 @@ function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, hand
         </div>
     );
   } else {
-    return <span className="file">📄 {explorer.name}</span>;
+    return ( 
+      
+      <div className="file__page">
+            <span className="file">📄 {explorer.name}</span> 
+            <div className="file__page__icon">
+            <IconContext.Provider value={{ color: "white",className: "global-class-name", size: "1.6em" }}>
+                <button className="folder-button__page" onClick={(e) => handleRenamenode(explorer.id, e.target.value)}><IoPencilSharp /></button>
+                <button className="folder-button__page" onClick={(e) => handleDeletenode(e,explorer.id)}><MdDeleteOutline /></button>
+            </IconContext.Provider>
+            </div>
+      </div>
+      
+    );
   }
 }
 

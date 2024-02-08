@@ -13,6 +13,7 @@ function FileExplorer() {
     const handleDeleteNode = (folderId) => {
       const finalTree = deleteNode(explorerData, folderId);
       setExplorerData(finalTree);
+      console.log(finalTree);
     }
 
     const handleRenameNode = (folderId, newName) => {
