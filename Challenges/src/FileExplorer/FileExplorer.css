@@ -102,3 +102,8 @@
         background-color: rgb(96, 89, 89);
     }
 }
+
+.inputContainer__input__folder{
+    width: 7rem;
+    margin-left: 0.5rem;
+}

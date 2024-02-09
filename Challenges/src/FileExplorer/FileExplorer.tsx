@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './FileExplorer.css';
-import explorer from './assets/FolderData.js';
+import explorer from './FolderData.js';
 import Folder from './Folder.js';
-import useTraverseTree from './useTraverseTree.js';
+import useTraverseTree from '../useTraverseTree.js';
 
 function FileExplorer() {
   

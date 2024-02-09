@@ -8,6 +8,8 @@ import { MdDeleteOutline } from "react-icons/md";
 
 function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, handleRenameNode = () => {},explorer }) {
   const [expand, setExpand] = useState(false);
+  const [rename, setRename] = useState(false);
+  const [newName, setNewName] = useState('');
   const [showInput, setShowInput] = useState({
     visible: false,
     isFolder: false
@@ -33,7 +35,8 @@ function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, hand
   const onRenameFolder = (e) => {
     if (e.keyCode === 13 && e.target.value) {
       handleRenameNode(explorer.id, e.target.value);
-      setShowInput({ ...showInput, visible: false });
+      setShowInput({ ...showInput, visible: true });
+      setRename(false);
     }
   }
 
@@ -52,12 +55,25 @@ function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, hand
     return (
         <div style={{ marginTop: 5 }}>
           <div onClick={() => setExpand(!expand)} className="folder">
-            <span>📁 {explorer.name}</span>
+            {rename && (
+  <div className="inputContainer">📁 
+    <input
+      type="text"
+      defaultValue={explorer.name}
+      autoFocus
+      onChange={(e) => setNewName(e.target.value)}
+      onKeyDown={onRenameFolder}
+      onBlur={() => setShowInput({ ...showInput, visible: false })}
+      className="inputContainer__input__folder"
+    />
+  </div>
+)}
+{!rename && <span>📁 {explorer.name}</span>}
             <IconContext.Provider value={{ color: "white",className: "global-class-name", size: "1.6em" }}>
               <div>
                 <button className="folder-button" onClick={(e) => handleNewFolder(e, true)}><TiFolderAdd /></button>
                 <button className="folder-button" onClick={(e) => handleNewFolder(e, false)}><FiFilePlus /></button>
-                <button className="folder-button" onClick={(e) => handleRenamenode(explorer.id, e.target.value)}><IoPencilSharp /></button>
+                <button className="folder-button" onClick={(e) => {setRename(!rename)}}><IoPencilSharp /></button>
                 <button className="folder-button" onClick={(e) => handleDeletenode(e,explorer.id)}><MdDeleteOutline /></button>
               </div>
             </IconContext.Provider>
@@ -82,6 +98,7 @@ function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, hand
                 <Folder
                   handleInsertNode={handleInsertNode}
                   handleDeleteNode={handleDeleteNode}
+                  handleRenameNode={handleRenameNode}
                   key={exp.id}
                   explorer={exp}
                 />
@@ -94,10 +111,23 @@ function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, hand
     return ( 
       
       <div className="file__page">
-            <span className="file">📄 {explorer.name}</span> 
+            {rename && (
+  <div className="inputContainer">📄
+    <input
+      type="text"
+      defaultValue={explorer.name}
+      autoFocus
+      onChange={(e) => setNewName(e.target.value)}
+      onKeyDown={onRenameFolder}
+      onBlur={() => setShowInput({ ...showInput, visible: false })}
+      className="inputContainer__input"
+    />
+  </div>
+)}
+{!rename && <span className="file">📄 {explorer.name}</span>}
             <div className="file__page__icon">
             <IconContext.Provider value={{ color: "white",className: "global-class-name", size: "1.6em" }}>
-                <button className="folder-button__page" onClick={(e) => handleRenamenode(explorer.id, e.target.value)}><IoPencilSharp /></button>
+                <button className="folder-button__page" onClick={() => {setRename(!rename)}}><IoPencilSharp /></button>
                 <button className="folder-button__page" onClick={(e) => handleDeletenode(e,explorer.id)}><MdDeleteOutline /></button>
             </IconContext.Provider>
             </div>
@@ -108,3 +138,4 @@ function Folder({ handleInsertNode = () => {}, handleDeleteNode = () => {}, hand
 }
 
 export default Folder;
+
