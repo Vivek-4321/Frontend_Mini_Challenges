@@ -75,7 +75,24 @@
     }
 }
 
-.inputContainer__input__comment{
+/* .inputContainer__input__comment{
     width: 10rem;
-    /* background-color: rgb(14, 13, 13); */
+    background-color: rgb(14, 13, 13);
+} */
+
+.inputContainer__comment{
+    margin: 1rem 0;
+
+    textarea{
+        border: none;
+        background-color: rgb(12, 12, 12);
+        outline: none;
+        height: 3rem;
+        width: 19rem;
+        border-radius: 0.6rem;
+        padding: 10px;
+        caret-color: white;
+        color: white;
+        resize: none;
+    }
 }

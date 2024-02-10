@@ -34,9 +34,8 @@ const Comments = ({ handleInsertNode = () => {}, handleDeleteNode = () => {}, ha
     <div>
     <div className='comment__container'>
       {isRename && <div>
-        <div className="inputContainer"> 
-        <input
-          type="text"
+        <div className="inputContainer__comment"> 
+        <textarea
           defaultValue={comment.name}
           autoFocus
           onChange={(e) => setNewName(e.target.value)}
