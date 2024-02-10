@@ -4,6 +4,78 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(23, 23, 23);
+    background-color: rgb(18, 18, 18);
     color: white;
+    flex-direction: column;
+
+    h2{
+        margin-bottom: 4rem;
+    }
+}
+
+.comment__container{
+    width: 30rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(33, 32, 32);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.comment__container:hover{
+    background-color: rgb(55, 52, 52);
+
+    .comment__btn_group{
+        background-color: rgb(55, 52, 52);
+    }
+
+    button{
+        background-color: rgb(55, 52, 52);
+    }
+}
+
+.comment__btn_group{
+    background-color: rgb(33, 32, 32);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: all 0.2s ease-in-out;
+
+    button{
+        background-color: rgb(33, 32, 32);
+        border: none;
+        margin-left: 1rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    button:hover{
+        scale: 1.2;
+    }
+}
+
+.input_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    textarea{
+        margin-top: 0.5rem;
+        width: 80%;
+        height: 4rem;
+        resize: none;
+        outline: none;
+        background-color: rgb(33, 32, 32);
+        border: none;
+        color: white;
+        padding: 10px;
+    }
+}
+
+.inputContainer__input__comment{
+    width: 10rem;
+    /* background-color: rgb(14, 13, 13); */
 }
