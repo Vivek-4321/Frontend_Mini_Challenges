@@ -3,6 +3,7 @@ import './InfinitelyNestedComments.css';
 import CommentData from './CommentData.js';
 import Comments from './Comments.tsx';
 import useTraverseTree from './useTraverseTree.tsx';
+import { v4 as uuidv4 } from "uuid";
 
 function InfinitelyNestedComments() {
 
@@ -31,7 +32,7 @@ function InfinitelyNestedComments() {
     <div className='infinitely_nested_comments__container'>
       <h2>Infinitely Nested Comments</h2>
         <div className="infinitely_nested_comments__container__content">
-        <Comments handleInsertNode={handleInsertNode} handleDeleteNode={handleDeleteNode} handleRenameNode={handleRenameNode} comment={comments}/>
+        <Comments handleInsertNode={handleInsertNode} handleDeleteNode={handleDeleteNode} handleRenameNode={handleRenameNode} comment={comments} key={uuidv4()}/>
           
         </div>
     </div>
