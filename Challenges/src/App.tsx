@@ -6,7 +6,7 @@ import ProgressBar from './ProgressBar'
 import FileExplorer from './FileExplorer/FileExplorer';
 import DependentDropDown from './DependentDropDown';
 import MultiStepForm from './MultiStepForm/MultiStepForm';
-import Stepper from './Stepper/Stepper';
+import Stepper from './Stepper/CheckoutStepper';
 import InfinitelyNestedComments from './InfinitelyNestedComments/InfinitelyNestedComments';
 
 function App() {
