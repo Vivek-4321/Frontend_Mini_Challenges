@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState } from "react";
+import "./Home.css";
 
 function Home() {
   return (
-    <div>Home</div>
-  )
+    <main className="home">
+      <section className="card__container">
+        
+      </section>
+    </main>
+  );
 }
 
 export default Home;

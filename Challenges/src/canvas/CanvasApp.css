@@ -1,0 +1,101 @@
+.canvas-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #1E1E1E;
+  }
+  
+  .canvas-container {
+    flex-grow: 1;
+  }
+  
+  .toolbar {
+    display: flex;
+    align-items: center;
+    background-color: #2D2D2D;
+    padding: 10px;
+    height: 60px;
+    border-radius: 30px;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .toolbar:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .toolbar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s, transform 0.2s;
+    color: #FFFFFF;
+  }
+  
+  .toolbar button:hover {
+    background-color: #3D3D3D;
+    transform: scale(1.1);
+  }
+  
+  .toolbar button.active {
+    background-color: #4D4D4D;
+  }
+  
+  .color-picker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 5px;
+  }
+  
+  .color-icon {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .color-picker input[type="color"] {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: none;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .toolbar input[type="range"] {
+    width: 100px;
+    margin: 0 10px;
+    /* -webkit-appearance: none; */
+    background: transparent;
+  }
+  
+  .toolbar input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    cursor: pointer;
+    margin-top: -6px;
+  }
+  
+  .toolbar input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    background: #3D3D3D;
+    border-radius: 2px;
+  }
+  
+  canvas {
+    cursor: crosshair;
+  }
+  
+  .cursor-preview {
+    pointer-events: none;
+    transition: width 0.2s, height 0.2s;
+  }

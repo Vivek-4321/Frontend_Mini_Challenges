@@ -1,32 +1,24 @@
-import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import Counter from './Counter'
-import ProgressBar from './ProgressBar'
-import FileExplorer from './FileExplorer/FileExplorer';
-import DependentDropDown from './DependentDropDown';
-import MultiStepForm from './MultiStepForm/MultiStepForm';
-import Stepper from './Stepper/CheckoutStepper';
-import InfinitelyNestedComments from './InfinitelyNestedComments/InfinitelyNestedComments';
-
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Home.tsx";
+import Navbar from "./Navbar.tsx";
+import Counter from "./counter/Counter.tsx";
+import BMICalculator from "./bmi/BMICalculator.tsx";
+import CanvasApp from "./canvas/CanvasApp.tsx";
 function App() {
-
   return (
     <>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/counter" element={<Counter />} />
-          <Route path="/progress-bar" element={<ProgressBar />} />
-          <Route path='/file-explorer' element={<FileExplorer />} />
-          <Route path='/dropdown' element={<DependentDropDown/>} />
-          <Route path='/multi-step-form' element={<MultiStepForm />} />
-          <Route path='/react-stepper' element={<Stepper/>} />
-          <Route path="/infinitely-nested-comments" element={<InfinitelyNestedComments/>} />
+          <Route path="/bmi" element={<BMICalculator />} />
+          <Route path="/canvas" element={<CanvasApp/>} />
         </Routes>
       </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
