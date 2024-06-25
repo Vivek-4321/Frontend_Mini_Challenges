@@ -448,7 +448,6 @@ const Canvas: React.FC<CanvasProps> = ({
     setZoom(newZoom);
     if (canvasRef.current && containerRef.current) {
       const canvas = canvasRef.current;
-      const container = containerRef.current;
       canvas.style.transition = 'transform 0.3s ease';
       canvas.style.transform = `scale(${newZoom})`;
       canvas.style.transformOrigin = 'top left';
