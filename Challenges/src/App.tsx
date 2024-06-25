@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home.tsx";
 import Navbar from "./Navbar.tsx";
 import Counter from "./counter/Counter.tsx";
@@ -8,7 +8,7 @@ import CanvasApp from "./canvas/CanvasApp.tsx";
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -16,7 +16,7 @@ function App() {
           <Route path="/bmi" element={<BMICalculator />} />
           <Route path="/canvas" element={<CanvasApp/>} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 }
