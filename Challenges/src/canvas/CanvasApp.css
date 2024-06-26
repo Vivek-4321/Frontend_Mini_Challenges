@@ -1,27 +1,3 @@
-.canvas-app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-    background-color: #1E1E1E;
-  }
-  
-  .canvas-container {
-    flex-grow: 1;
-  }
-  
-  .toolbar {
-    display: flex;
-    align-items: center;
-    background-color: #2D2D2D;
-    padding: 10px;
-    height: 60px;
-    border-radius: 30px;
-    margin: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-  
   .toolbar:hover {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
   }
@@ -98,4 +74,33 @@
   .cursor-preview {
     pointer-events: none;
     transition: width 0.2s, height 0.2s;
+  }
+
+  .canvas-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--color-primary);
+    position: relative;
+  }
+  
+  .canvas-container {
+    flex-grow: 1;
+  }
+  
+  .toolbar {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    background-color: var(--color-dark);
+    padding: 10px;
+    height: 60px;
+    border-radius: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 1000;
   }

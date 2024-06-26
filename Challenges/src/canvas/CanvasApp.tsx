@@ -21,7 +21,7 @@ const CanvasApp: React.FC = () => {
       canvas.height = window.innerHeight - 60; // Subtract toolbar height
       const context = canvas.getContext('2d');
       if (context) {
-        context.fillStyle = '#1E1E1E';
+        context.fillStyle = '#0E0E0E';
         context.fillRect(0, 0, canvas.width, canvas.height);
         const initialState = context.getImageData(0, 0, canvas.width, canvas.height);
         setHistory([initialState]);
@@ -61,7 +61,7 @@ const CanvasApp: React.FC = () => {
     if (canvas) {
       const context = canvas.getContext('2d');
       if (context) {
-        context.fillStyle = '#1E1E1E';
+        context.fillStyle = '#0E0E0E';
         context.fillRect(0, 0, canvas.width, canvas.height);
         const newState = context.getImageData(0, 0, canvas.width, canvas.height);
         setHistory([newState]);
@@ -88,6 +88,15 @@ const CanvasApp: React.FC = () => {
 
   return (
     <div className="canvas-app">
+      <Canvas
+        canvasRef={canvasRef}
+        color={color}
+        size={size}
+        tool={tool}
+        currentShape={currentShape}
+        setCurrentShape={setCurrentShape}
+        updateHistory={updateHistory}
+      />
       <Toolbar
         color={color}
         setColor={setColor}
@@ -99,15 +108,6 @@ const CanvasApp: React.FC = () => {
         redo={redo}
         reset={reset}
         download={download}
-      />
-      <Canvas
-        canvasRef={canvasRef}
-        color={color}
-        size={size}
-        tool={tool}
-        currentShape={currentShape}
-        setCurrentShape={setCurrentShape}
-        updateHistory={updateHistory}
       />
     </div>
   );

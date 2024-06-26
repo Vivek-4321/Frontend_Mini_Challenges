@@ -22,7 +22,7 @@ const ZoomControls: React.FC<ZoomControlsProps> = ({ zoom, onZoomChange }) => {
       right: '20px',
       display: 'flex',
       alignItems: 'center',
-      background: '#2D2D2D',
+      background: '#1A1A1A',
       padding: '5px',
       borderRadius: '20px',
     }}>

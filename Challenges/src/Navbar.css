@@ -9,6 +9,7 @@
   padding: 0 2rem;
   z-index: 1;
   position: relative; /* add this to make the navbar element positionable */
+  border-bottom: 2px solid #1A1A1A;
 }
 
 .navbar__title {
