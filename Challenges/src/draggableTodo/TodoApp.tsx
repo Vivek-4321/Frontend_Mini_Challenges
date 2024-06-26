@@ -36,7 +36,7 @@ const TodoApp: React.FC = () => {
     setDragOverItem(targetId);
   };
 
-  const handleDragEnd = (e: DragEvent) => {
+  const handleDragEnd = () => {
     setDragging(false);
     setDragOverItem(null);
     dragNode.current?.removeEventListener('dragend', handleDragEnd);
