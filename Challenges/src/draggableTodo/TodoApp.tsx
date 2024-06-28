@@ -108,6 +108,7 @@ const TodoApp: React.FC = () => {
       <div className="add-todo">
         <input
           type="text"
+          className='add-todo-input'
           placeholder="Add a new todo"
           onKeyPress={(e) => {
             if (e.key === 'Enter') {

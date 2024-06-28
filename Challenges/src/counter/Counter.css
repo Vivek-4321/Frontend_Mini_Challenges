@@ -22,6 +22,11 @@
 .counter__value{
     font-size: var(--font-size-xxlarge);
     margin-bottom: var(--spacing-large);
+    color: var(--color-light);
+}
+
+.counter__value h1{
+    visibility: visible;
 }
 
 .counter__buttons{
