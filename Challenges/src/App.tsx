@@ -27,6 +27,7 @@ import AnimatedScatterPlot from "./scatterplot/AnimatedScatterPlot.tsx";
 import Wrapper from "./videoplayer/Wrapper.tsx";
 import FileWrapper from "./fileuploader/FileWrapper.tsx";
 import WeatherWrapper from "./weatherapp/WeatherWrapper.tsx";
+import BottomNavigation from "./bottomnavigation/BottomNavBar.tsx";
 
 function App() {
   const data = [
@@ -77,6 +78,7 @@ function App() {
           <Route path="/linegraph" element={<AnimatedLineGraph />} />
           <Route path="/fileuploader" element={<FileWrapper />} />
           <Route path="/weather" element={<WeatherWrapper />} />
+          <Route path="/bottomnavigation" element={<BottomNavigation />} />
           <Route
             path="/bargraph"
             element={
