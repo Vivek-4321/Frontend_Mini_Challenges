@@ -1,88 +1,61 @@
-.file-explorer {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .file-tree {
-    background-color: #1e1e1e;
-    color: #d4d4d4;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .node {
-    margin-left: 20px;
-    position: relative;
-    transition: all 0.3s ease;
-  }
-  
-  .node-content {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .node-content:hover {
-    background-color: #2a2d2e;
-  }
-  
-  .node.selected > .node-content {
-    background-color: #37373d;
-  }
-  
-  .icon {
-    margin-right: 5px;
-  }
-  
-  .node-actions {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: none;
-    background-color: #252526;
-    padding: 2px;
-    border-radius: 3px;
-  }
-  
-  .node:hover > .node-actions {
-    display: flex;
-  }
-  
-  .action-icon {
-    cursor: pointer;
-    margin-left: 5px;
-    transition: color 0.3s ease;
-  }
-  
-  .action-icon:hover {
-    color: #007acc;
-  }
-  
-  .children {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-  }
-  
-  .node.selected > .children {
-    max-height: 1000px;
-  }
-  
-  input[type="text"] {
-    background-color: #3c3c3c;
-    border: none;
-    color: #d4d4d4;
-    padding: 2px 5px;
-    border-radius: 3px;
-  }
-  
-  input[type="text"]:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #007acc;
-  }
+.App {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.dark-theme {
+  background-color: #333;
+  color: #fff;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.elements-container {
+  flex: 1;
+  max-width: 200px;
+}
+
+.element {
+  padding: 10px;
+  background-color: #555;
+  color: #fff;
+  margin-bottom: 10px;
+  cursor: move;
+}
+
+.box {
+  flex: 1;
+  max-width: 300px;
+  padding: 20px;
+  background-color: #555;
+  border-radius: 8px;
+}
+
+.box h2 {
+  margin-bottom: 10px;
+}
+
+.box-content {
+  padding: 10px;
+  background-color: #777;
+  border-radius: 4px;
+  min-height: 100px;
+}
+
+.box-element {
+  padding: 5px;
+  background-color: #444;
+  color: #fff;
+  margin-bottom: 5px;
+  cursor: move;
+}
+
+.box-element:hover {
+  background-color: #666;
+}

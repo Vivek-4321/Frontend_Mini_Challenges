@@ -1,0 +1,106 @@
+.accordian-app {
+  width: 100% ;
+  height: 90vh;
+  background-color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accordion {
+  width: 30%;
+  min-height: 20vh;
+  background-color: var(--color-dark);
+  border-radius: 8px;
+  box-shadow:  20px 20px 60px #0a0b0a,
+  -20px -20px 60px #121412;
+  overflow: hidden;
+  border-radius: 0.7rem;
+  transition: all 0.3s ease-in;
+}
+.accordion-item {
+
+    span{
+        color: var(--color-light) !important;
+    }
+  
+  border-bottom: 3px solid var(--color-primary) !important;
+  overflow: hidden;
+}
+.accordion-item:last-child {
+  border-bottom: none;
+}
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--color-dark);
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--color-light);
+}
+.accordion-header:hover {
+  background-color: var(--color-text);
+}
+.accordion-header span {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+.accordion-content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+}
+.accordion-content-inner {
+min-height: 4rem !important;
+max-height: 6rem;
+  padding: 0.8rem;
+  color: var(--color-light);
+
+}
+.accordion-item.open .accordion-header {
+    border-radius: 0.4rem;
+  background-color: var(--color-primary);
+}
+.accordion-icon {
+  transition: transform 0.3s ease;
+}
+.accordion-item.open .accordion-icon {
+  transform: rotate(180deg);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.accordion-item.open .accordion-content-inner {
+  animation: fadeIn 0.5s ease forwards;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+/* .accordion-item.open .accordion-header {
+  background-image: linear-gradient(
+    to right,
+    #e6f7ff 8%,
+    #f0f9ff 18%,
+    #e6f7ff 33%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+} */

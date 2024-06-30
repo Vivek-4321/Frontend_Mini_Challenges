@@ -1,0 +1,497 @@
+   .video-player {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    background-color: #000;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .video-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.3s ease;
+  }
+  
+  .ambient-mode .video-element {
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    border-radius: 0.5rem;
+  }
+  
+  .ambient-background {
+    position: absolute;
+    top: 0;
+    left: -75%;  /*Adjust these three values to get a better ambient effect*/
+    width: 250%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  .ambient-mode .ambient-background {
+    opacity: 1;
+  }
+  
+  .controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 16px;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .controls.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .controls-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .left-controls, .right-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .control-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 16px;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+  }
+  
+  .control-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+  
+  .control-button:active {
+    transform: scale(0.95);
+  }
+  
+  .volume-control {
+    display: flex;
+    align-items: center;
+  }
+  
+  .volume-slider {
+    width: 80px;
+    margin-left: 8px;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.3);
+    outline: none;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+  }
+  
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .volume-slider:hover::-webkit-slider-thumb,
+  .volume-slider:hover::-moz-range-thumb {
+    transform: scale(1.2);
+  }
+  
+  .time-display {
+    color: white;
+    font-size: 14px;
+    margin-left: 16px;
+  }
+  
+  .progress-bar {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: height 0.2s ease;
+  }
+  
+  .progress-bar:hover {
+    height: 8px;
+  }
+  
+  .buffered {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: width 0.1s linear;
+  }
+  
+  .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #ff0000;
+    transition: width 0.1s linear;
+  }
+  
+  .seek-thumb {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease;
+  }
+  
+  .progress-bar:hover .seek-thumb {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  .settings-menu {
+    position: absolute;
+    bottom: 60px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 16px;
+    border-radius: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    color: white;
+    z-index: 10;
+  }
+  
+  .settings-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .settings-menu h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .settings-menu select {
+    width: 100%;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  .settings-menu select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+  }
+  
+  .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .seek-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .seek-animation.forward {
+    animation: slideRight 0.5s ease-in-out;
+  }
+  
+  .seek-animation.backward {
+    animation: slideLeft 0.5s ease-in-out;
+  }
+  
+  @keyframes slideRight {
+    0% { transform: translate(-100%, -50%) scale(0.5); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(0%, -50%) scale(0.5); opacity: 0; }
+  }
+  
+  @keyframes slideLeft {
+    0% { transform: translate(0%, -50%) scale(0.5); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-100%, -50%) scale(0.5); opacity: 0; }
+  }
+
+  .seek-bar {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: height 0.2s ease;
+  }
+  
+  .seek-bar:hover {
+    height: 8px;
+  }
+  
+  .buffered {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: width 0.1s linear;
+  }
+  
+  .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #ff0000;
+    transition: width 0.1s linear;
+  }
+  
+  .seek-thumb {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease;
+  }
+  
+  .seek-bar:hover .seek-thumb {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  .segment-marker {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: height 0.2s ease;
+  }
+  
+  .seek-bar:hover .segment-marker {
+    height: 150%;
+  }
+  
+  .event-marker {
+    position: absolute;
+    bottom: 100%;
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+  
+  .event-marker img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+  
+  .tooltip {
+    position: absolute;
+    bottom: 100%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .seek-bar:hover .tooltip {
+    opacity: 1;
+  }
+
+  /* ... (existing styles) */
+
+.captions-container {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 80%;
+  text-align: center;
+  z-index: 100000 !important;
+}
+
+.caption-text {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  display: inline-block;
+
+}
+
+.captions-menu {
+  position: absolute;
+  bottom: 60px;
+  right: 80px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 16px;
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  color: white;
+  z-index: 10;
+}
+
+.captions-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.captions-menu h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.captions-menu select {
+  width: 100%;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.captions-menu select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+::cue {
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  text-shadow: 1px 1px 2px black;
+}
+
+.speed-menu {
+  position: absolute;
+  bottom: 60px;
+  right: 140px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 16px;
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  color: white;
+  z-index: 10;
+}
+
+.speed-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.speed-menu h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.speed-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.speed-button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  margin: 2px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.speed-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.speed-button.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+}
