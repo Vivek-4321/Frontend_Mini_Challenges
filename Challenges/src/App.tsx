@@ -39,6 +39,13 @@ import MemoryGame from "./memorygame/MemoryGame.tsx";
 import OTPInput from "./otp/OtpInput.tsx";
 import AnalogClock from "./analogclock/AnalogClock.tsx";
 import Pagination from "./pagination/Pagination.tsx";
+import QuizApp from "./quiz/QuizApp.tsx";
+import Hangman from "./hangman/Hangman.tsx";
+import PasswordGenerator from "./passwordgenerator/PasswordGenerator.tsx";
+import DataStructure from "./datastructure/DataStructure.tsx";
+import SplitPaneWrapper from "./splitpane/SplitPaneWrapper.tsx";
+import SudokuSolver from "./sudokusolver/SudokuSolver.tsx";
+import AudioPlayerWrapper from "./audioplayer/AudioPlayerWrapper.tsx";
 
 function App() {
   const data = [
@@ -104,6 +111,13 @@ function App() {
           <Route path="/clock" element={<AnalogClock />} />
           <Route path="/otp" element={<OTPInput length={6} onComplete={handleOTPComplete} />} />
           <Route path="/pagination" element={<Pagination />} />
+          <Route path="/quiz" element={<QuizApp />} />
+          <Route path="/hangman" element={<Hangman />} />
+          <Route path="/password" element={<PasswordGenerator />} />
+          <Route path="/datastructure" element={<DataStructure />} />
+          <Route path="/splitpane" element={<SplitPaneWrapper />} />
+          <Route path="/sudoku" element={<SudokuSolver />} />
+          <Route path="/audioplayer" element={<AudioPlayerWrapper />} />
           <Route
             path="/bargraph"
             element={

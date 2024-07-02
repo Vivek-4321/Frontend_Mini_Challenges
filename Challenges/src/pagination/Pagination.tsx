@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaChevronLeft, FaChevronRight, FaUserAlt } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import './Pagination.css';
 
 interface Character {
@@ -8,6 +8,7 @@ interface Character {
   mass: string;
   birth_year: string;
   gender: string;
+  image: string;
 }
 
 interface ApiResponse {
@@ -19,9 +20,7 @@ interface ApiResponse {
 
 const CharacterCard: React.FC<{ character: Character }> = ({ character }) => (
   <div className="character-card">
-    <div className="character-icon">
-      <FaUserAlt />
-    </div>
+    <img src={character.image} alt={character.name} className="character-image" />
     <h2>{character.name}</h2>
     <p>Height: {character.height}cm</p>
     <p>Mass: {character.mass}kg</p>
@@ -45,12 +44,27 @@ const StarWarsPagination: React.FC = () => {
     try {
       const response = await fetch(`https://swapi.dev/api/people/?page=${currentPage}`);
       const data: ApiResponse = await response.json();
-      setCharacters(data.results);
-      setTotalPages(Math.ceil(data.count / 10)); // SWAPI returns 10 results per page
+      
+      const charactersWithImages = await Promise.all(
+        data.results.map(async (character) => {
+          const imageResponse = await fetch(`https://starwars-visualguide.com/assets/img/characters/${getCharacterId(character)}.jpg`);
+          const image = imageResponse.ok ? imageResponse.url : 'https://starwars-visualguide.com/assets/img/placeholder.jpg';
+          return { ...character, image };
+        })
+      );
+
+      setCharacters(charactersWithImages);
+      setTotalPages(Math.ceil(data.count / 10));
     } catch (error) {
       console.error('Error fetching Star Wars characters:', error);
     }
     setIsLoading(false);
+  };
+
+  const getCharacterId = (character: Character) => {
+    const url = character.url || '';
+    const matches = url.match(/\/(\d+)\/$/);
+    return matches ? matches[1] : '1';
   };
 
   const handlePrevPage = () => {

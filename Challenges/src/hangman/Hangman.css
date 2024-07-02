@@ -1,0 +1,165 @@
+
+  .hangman-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  .game-info {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hangman-figure {
+    margin-top: -9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hangman-figure line, .hangman-figure circle {
+    stroke: var(--color-light);
+    stroke-width: 3;
+    fill: none;
+  }
+  
+  .word {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .letter {
+    font-size: 2rem;
+    margin: 0 0.5rem;
+    border-bottom: 2px solid var(--color-light);
+    width: 30px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .keyboard-button {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    border: 2px solid var(--color-dark);
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .keyboard-button:hover:not(:disabled) {
+    background-color: var(--color-dark);
+    transform: translateY(-2px);
+  }
+  
+  .keyboard-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .keyboard-button.guessed {
+    background-color: var(--color-dark);
+  }
+  
+  .game-result {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 2rem;
+    border-radius: 10px;
+    animation: fadeIn 0.5s ease-out;
+    z-index: 10;
+    color: white;
+
+    button {
+        border: 3px solid var(--color-light);
+        background-color: var(--color-light);
+        color: var(--color-dark);
+        border-radius: 0.5rem;
+    }
+
+    button:hover{
+        background-color: var(--color-primary);
+        color: var(--color-light);
+    }
+  }
+  
+  .game-result.won {
+    background-color: rgba(0, 128, 0, 0.8);
+  }
+  
+  .game-result.lost {
+    background-color: rgba(255, 0, 0, 0.8);
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-primary);
+    opacity: 0.9;
+    z-index: 5;
+  }
+  
+  .new-game-button {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    border: 2px solid var(--color-light);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .new-game-button:hover {
+    background-color: var(--color-light);
+    color: var(--color-primary);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @media (max-width: 480px) {
+    .keyboard-button {
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+  
+    .letter {
+      font-size: 1.5rem;
+      width: 20px;
+    }
+      
+    .hangman-figure {
+      width: 150px;
+      height: 187.5px;
+    }
+  }

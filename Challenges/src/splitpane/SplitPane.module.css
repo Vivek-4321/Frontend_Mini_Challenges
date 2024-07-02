@@ -1,0 +1,60 @@
+/* SplitPane.module.css */
+.splitPane {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.pane {
+  overflow: auto;
+  transition: flex 0.3s ease;
+}
+
+.separator {
+  background: var(--color-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.separatorhorizontal {
+  cursor: col-resize;
+  width: 10px;
+}
+
+.separatorvertical {
+  cursor: row-resize;
+  height: 10px;
+}
+
+.separator:hover {
+  background-color: var(--color-light);
+}
+
+.sliderHandle {
+  background-color: var(--color-light);
+  transition: background-color 0.3s ease;
+}
+
+.separatorhorizontal .sliderHandle {
+  width: 4px;
+  height: 30px;
+}
+
+.separatorvertical .sliderHandle {
+  width: 30px;
+  height: 4px;
+}
+
+.separator:hover .sliderHandle {
+  background-color: var(--color-text);
+}

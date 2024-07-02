@@ -5,6 +5,8 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   list-style: none;
   text-decoration: none;
   scrollbar-width: thin;
