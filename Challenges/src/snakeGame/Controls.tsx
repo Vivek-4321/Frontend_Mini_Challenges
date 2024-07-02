@@ -7,7 +7,7 @@ interface ControlsProps {
 
 const Controls: React.FC<ControlsProps> = ({ resetGame }) => {
     return (
-        <div className="controls">
+        <div className="controls-snake">
             <button onClick={resetGame}>
                 <FaRedo /> Reset
             </button>

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ffmpeg/core": "^0.12.6",
+    "@ffmpeg/ffmpeg": "^0.12.10",
     "@react-pdf/renderer": "^3.4.4",
     "@types/react-syntax-highlighter": "^15.5.13",
     "axios": "^1.7.2",
@@ -21,6 +23,7 @@
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-icons": "^5.2.1",
     "react-pdf": "^8.0.2",
     "react-router-dom": "^6.21.3",

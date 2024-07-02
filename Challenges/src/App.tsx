@@ -22,12 +22,23 @@ import SkeletonLoader from "./skeletonloader/SkeletonLoader.tsx";
 import Calculator from "./calculator/Calculator.tsx";
 import AnimatedLineGraph from "./linegraph/AnimatedLineGraph.tsx";
 import AnimatedBarGraph from "./bargraph/AnimatedBarGraph.tsx";
-import AnimatedPieChart from "./piechart/AnimatedPieChart.tsx";
+import AnimatedPieChartWrapper from "./piechart/AnimatedPiChartWrapper.tsx";
 import AnimatedScatterPlot from "./scatterplot/AnimatedScatterPlot.tsx";
 import Wrapper from "./videoplayer/Wrapper.tsx";
 import FileWrapper from "./fileuploader/FileWrapper.tsx";
 import WeatherWrapper from "./weatherapp/WeatherWrapper.tsx";
 import BottomNavigation from "./bottomnavigation/BottomNavBar.tsx";
+import CarouselWrapper from "./carousel/CarouselWrapper.tsx";
+import VideoTimelineWrapper from "./videotimeline/VideoTimelineWrapper.tsx";
+import Tetris from "./tetris/Tetris.tsx"
+import AutocompleteComponent from "./autocomplete/AutoComplete.tsx";
+import StarRating from "./starrating/StarRating.tsx";
+import ToastWrapper from "./toast/ToastWrapper.tsx";
+import ConnectFour from "./connectfour/ConnectFour.tsx";
+import MemoryGame from "./memorygame/MemoryGame.tsx";
+import OTPInput from "./otp/OtpInput.tsx";
+import AnalogClock from "./analogclock/AnalogClock.tsx";
+import Pagination from "./pagination/Pagination.tsx";
 
 function App() {
   const data = [
@@ -35,22 +46,25 @@ function App() {
     { label: "B", value: 20 },
     { label: "C", value: 15 },
     { label: "D", value: 25 },
+    { label: "E", value: 30 },
+    { label: "F", value: 20 },
   ];
 
-  const Data = [
-    { label: 'A', value: 30, color: '#FF6384' },
-    { label: 'B', value: 50, color: '#36A2EB' },
-    { label: 'C', value: 20, color: '#FFCE56' },
-    { label: 'D', value: 40, color: '#4BC0C0' },
-  ];
-
+ 
   const DaTa = [
     { x: 1, y: 2, label: 'Point A', color: '#ff0000' },
     { x: 2, y: 3, label: 'Point B', color: '#00ff00' },
     { x: 3, y: 1, label: 'Point C', color: '#0000ff' },
     { x: 4, y: 4, label: 'Point D' },
     { x: 5, y: 2, label: 'Point E' },
+    { x: 3, y: 3, label: 'Point F' },
+    { x: 4, y: 2, label: 'Point G' },
   ];
+
+  const handleOTPComplete = (otp: string) => {
+    console.log('Completed OTP:', otp);
+    // You can add your verification logic here
+  };
 
   return (
     <>
@@ -79,6 +93,17 @@ function App() {
           <Route path="/fileuploader" element={<FileWrapper />} />
           <Route path="/weather" element={<WeatherWrapper />} />
           <Route path="/bottomnavigation" element={<BottomNavigation />} />
+          <Route path="/carousel" element={<CarouselWrapper />} />
+          <Route path="/video" element={<VideoTimelineWrapper />} />
+          <Route path="/tetris" element={<Tetris/>} />
+          <Route path="/autocomplete" element={<AutocompleteComponent/>} />
+          <Route path="/starrating" element={<StarRating/>} />
+          <Route path="/toast" element={<ToastWrapper/>} />
+          <Route path="/connectfour" element={<ConnectFour/>} />
+          <Route path="/memorygame" element={<MemoryGame />} />
+          <Route path="/clock" element={<AnalogClock />} />
+          <Route path="/otp" element={<OTPInput length={6} onComplete={handleOTPComplete} />} />
+          <Route path="/pagination" element={<Pagination />} />
           <Route
             path="/bargraph"
             element={
@@ -87,20 +112,11 @@ function App() {
                 width={800}
                 height={400}
                 title="Sample Bar Chart"
+                
               />
             }
           />
-          <Route path="/piechart" element={<AnimatedPieChart data={Data}
-      width={400}
-      height={500}
-      title="Sample Pie Chart"
-      backgroundColor="#f0f0f0"
-      labelColor="#333"
-      titleColor="#1a1a1a"
-      titleFontSize={28}
-      margin="0px"
-      padding="0px"
-/>} />
+          <Route path="/piechart" element={<AnimatedPieChartWrapper />} />
             <Route path="/scatterplot" element={<AnimatedScatterPlot   data={DaTa}
         width={800}
         height={600}

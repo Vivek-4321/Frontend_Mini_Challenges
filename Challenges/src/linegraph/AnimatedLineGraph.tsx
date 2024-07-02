@@ -16,6 +16,7 @@ interface AnimatedLineGraphProps {
   animationDuration?: number;
   showTooltip?: boolean;
   showCurrentValue?: boolean;
+  showTitle?: boolean;
   yAxisRange?: [number, number];
   xAxisRange?: [number, number];  // New prop for x-axis range
   lineThickness?: number;
@@ -47,6 +48,7 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
   animationDuration = 500,
   showTooltip = true,
   showCurrentValue = true,
+  showTitle = false,
   yAxisRange = [-100, 100],
   xAxisRange = [0, 500],  // Default x-axis range
   lineThickness = 3,
@@ -58,7 +60,7 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
   yAxisLabel = 'Value',
   getData = async () => (Math.random() - 0.5) * 200,
   viewMode = 'scrolling',
-  showNodes = false,
+  showNodes = true,
   showGridLines = true,
   axisColor = '#888',  // Default axis color
   axisLabelColor = '#888',  // Default axis label color
@@ -117,6 +119,11 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
     graphHeight - ((value - minValue) / (maxValue - minValue)) * graphHeight + padding.top,
     [graphHeight, padding.top, minValue, maxValue]
   );
+
+  function getCssVariableValue(variableName) {
+    return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -251,7 +258,8 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
 
   return (
     <div className="graph-container" style={{ backgroundColor, fontFamily }}>
-      <h2 className="graph-title">{title}</h2>
+    <h2 className="graph-title" style={showTitle ? {} : { display: 'none' }}>{title}</h2>
+
       <div className="graph-content">
         <svg className="graph-svg" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" ref={svgRef}>
           <defs>
@@ -333,9 +341,10 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          height: 100vh;
-          color: white;
+          height: 90vh;
+          color: var(--color-light);
           padding: 2rem;
+          background-color: ${getCssVariableValue('--color-primary')} !important;
         }
         .graph-title {
           font-size: ${titleFontSize}px;
@@ -350,7 +359,9 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
           height: ${height}px;
           border-radius: 1rem;
           padding: 1.5rem;
-          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+          border: 3px solid ${getCssVariableValue('--color-dark')};
+          box-shadow:  20px 20px 60px #0a0b0a,
+    -20px -20px 60px #121412;
         }
         .graph-svg {
           width: 100%;
@@ -387,7 +398,7 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
           right: 1rem;
           display: flex;
           align-items: center;
-          background-color: rgba(58, 58, 58, 0.8);
+          background-color: ${getCssVariableValue('--color-dark')};
           border-radius: 9999px;
           padding: 0.5rem 1rem;
           box-shadow: 0 2px 4px rgba(0,0,0,0.2);

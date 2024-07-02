@@ -1,224 +1,284 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { FaInfoCircle } from 'react-icons/fa';
+import React, { useMemo, useState } from 'react';
 
-interface PieChartData {
+interface DataPoint {
   label: string;
   value: number;
-  color: string;
 }
 
-interface AnimatedPieChartProps {
-  data: PieChartData[];
+interface BarGraphProps {
   width?: number;
   height?: number;
+  data: DataPoint[];
+  barColor?: string;
+  backgroundColor?: string;
+  highlightColor?: string;
+  showValues?: boolean;
+  showLabels?: boolean;
+  showTitle?: boolean;
   title?: string;
   fontFamily?: string;
-  backgroundColor?: string;
   titleFontSize?: number;
-  titleColor?: string;
   labelFontSize?: number;
-  labelColor?: string;
-  showPercentage?: boolean;
-  percentageFontSize?: number;
-  percentageColor?: string;
-  sliceSpacing?: number;
-  margin?: string;
-  padding?: string;
+  valueFontSize?: number;
+  barSpacing?: number;
+  animationDuration?: number;
+  yAxisLabel?: string;
+  xAxisLabel?: string;
+  showGridLines?: boolean;
+  gridLineColor?: string;
+  axisColor?: string;
+  axisLabelColor?: string;
+  axisTitleColor?: string;
+  gradientIntensity?: number;
+  gradientStartColor?: string;
+  gradientMiddleColor?: string;
+  gradientEndColor?: string;
 }
 
-const AnimatedPieChart: React.FC<AnimatedPieChartProps> = ({
+const BarGraph: React.FC<BarGraphProps> = ({
+  width = 800,
+  height = 500,
   data,
-  width = 400,
-  height = 400,
-  title = 'Animated Pie Chart',
-  fontFamily = 'Arial, sans-serif',
+  barColor = '#FF5733',
   backgroundColor = '#2a2a2a',
+  highlightColor = '#FF8C66',
+  showValues = true,
+  showLabels = true,
+  showTitle = false,
+  title = 'Bar Graph',
+  fontFamily = 'Arial, sans-serif',
   titleFontSize = 24,
-  titleColor = 'white',
   labelFontSize = 12,
-  labelColor = 'white',
-  showPercentage = true,
-  percentageFontSize = 14,
-  percentageColor = 'white',
-  sliceSpacing = 2,
-  margin = '0',
-  padding = '2rem',
+  valueFontSize = 14,
+  barSpacing = 0.2,
+  animationDuration = 1000,
+  yAxisLabel = 'Value',
+  xAxisLabel = 'Category',
+  showGridLines = true,
+  gridLineColor = '#444',
+  axisColor = '#888',
+  axisLabelColor = '#888',
+  axisTitleColor = '#888',
+  gradientIntensity = 0.7,
+  gradientStartColor,
+  gradientMiddleColor,
+  gradientEndColor,
 }) => {
-  const [hoveredSlice, setHoveredSlice] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const [hoveredBar, setHoveredBar] = useState<number | null>(null);
+  const padding = { top: 40, right: 40, bottom: 60, left: 60 };
+  const graphWidth = width - padding.left - padding.right;
+  const graphHeight = height - padding.top - padding.bottom;
 
-  useEffect(() => {
-    if (containerRef.current) {
-      const updateSize = () => {
-        const { width, height } = containerRef.current!.getBoundingClientRect();
-        setContainerSize({ width, height });
-      };
-      updateSize();
-      window.addEventListener('resize', updateSize);
-      return () => window.removeEventListener('resize', updateSize);
-    }
-  }, []);
+  const maxValue = Math.max(...data.map(d => d.value));
+  const scaleFactor = graphHeight / maxValue;
 
-  const total = data.reduce((sum, item) => sum + item.value, 0);
-  const chartSize = Math.min(containerSize.width, containerSize.height) - 40; // Subtracting some padding
-  const radius = chartSize / 2 * 0.8; // Adjust this value to change the pie size relative to the container
+  const barWidth = graphWidth / data.length / (1 + barSpacing);
 
-  let startAngle = 0;
+  function getCssVariableValue(variableName) {
+    return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+  }
+
+  const bars = useMemo(() => 
+    data.map((d, i) => ({
+      x: padding.left + i * (barWidth * (1 + barSpacing)),
+      y: height - padding.bottom - d.value * scaleFactor,
+      width: barWidth,
+      height: d.value * scaleFactor,
+      value: d.value,
+      label: d.label,
+    })),
+    [data, barWidth, barSpacing, height, padding.bottom, padding.left, scaleFactor]
+  );
+
+  const yAxisTicks = useMemo(() => {
+    const tickCount = 5;
+    return Array.from({ length: tickCount }, (_, i) => ({
+      value: maxValue * (i / (tickCount - 1)),
+      y: height - padding.bottom - (maxValue * (i / (tickCount - 1)) * scaleFactor),
+    }));
+  }, [maxValue, height, padding.bottom, scaleFactor]);
+
+  const gradientId = 'barGradient';
+
+  // Use provided gradient colors or fallback to default values
+  const startColor = gradientStartColor || `${barColor}cc`;
+  const middleColor = gradientMiddleColor || `${barColor}66`;
+  const endColor = gradientEndColor || `${barColor}00`;
 
   return (
-    <div 
-      className="chart-container" 
-      style={{ 
-        backgroundColor, 
-        fontFamily, 
-        width, 
-        height,
-        margin,
-        padding,
-        position: 'relative',
-      }}
-      ref={containerRef}
-    >
-      <h2 className="chart-title" style={{ 
-        fontSize: titleFontSize,
-        color: titleColor,
-        textAlign: 'center',
-        marginBottom: '1rem',
-      }}>{title}</h2>
-      <div style={{ 
-        position: 'relative', 
-        width: '100%', 
-        height: `calc(100% - ${titleFontSize + 20}px)`,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-        <svg 
-          width={chartSize} 
-          height={chartSize} 
-          viewBox={`0 0 ${chartSize} ${chartSize}`}
-          style={{ overflow: 'visible' }}
-        >
-          <g transform={`translate(${chartSize / 2}, ${chartSize / 2})`}>
-            {data.map((item, index) => {
-              const percentage = item.value / total;
-              const endAngle = startAngle + percentage * 360;
+    <div className="graph-container" style={{ backgroundColor, fontFamily }}>
+      {showTitle && <h2 className="graph-title">{title}</h2>}
+      <svg width={width} height={height}>
+        <defs>
+          <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor={startColor} />
+            <stop offset="50%" stopColor={middleColor} />
+            <stop offset="100%" stopColor={endColor} />
+          </linearGradient>
+        </defs>
 
-              const startX = Math.cos((startAngle * Math.PI) / 180) * radius;
-              const startY = Math.sin((startAngle * Math.PI) / 180) * radius;
-              const endX = Math.cos((endAngle * Math.PI) / 180) * radius;
-              const endY = Math.sin((endAngle * Math.PI) / 180) * radius;
-
-              const largeArcFlag = percentage > 0.5 ? 1 : 0;
-
-              const pathData = [
-                `M ${startX} ${startY}`,
-                `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`,
-                'L 0 0',
-              ].join(' ');
-
-              const middleAngle = startAngle + (percentage * 360) / 2;
-              const labelX = Math.cos((middleAngle * Math.PI) / 180) * (radius * 0.7);
-              const labelY = Math.sin((middleAngle * Math.PI) / 180) * (radius * 0.7);
-
-              const slice = (
-                <g key={index} className="slice" onMouseEnter={() => setHoveredSlice(index)} onMouseLeave={() => setHoveredSlice(null)}>
-                  <path
-                    d={pathData}
-                    fill={item.color}
-                    stroke={backgroundColor}
-                    strokeWidth={sliceSpacing}
-                    className="slice-path"
-                  />
-                  <text
-                    x={labelX}
-                    y={labelY}
-                    textAnchor="middle"
-                    fill={labelColor}
-                    fontSize={labelFontSize}
-                    className="slice-label"
-                  >
-                    {item.label}
-                  </text>
-                  {showPercentage && (
-                    <text
-                      x={labelX}
-                      y={labelY + labelFontSize + 5}
-                      textAnchor="middle"
-                      fill={percentageColor}
-                      fontSize={percentageFontSize}
-                      className="slice-percentage"
-                    >
-                      {(percentage * 100).toFixed(1)}%
-                    </text>
-                  )}
-                </g>
-              );
-
-              startAngle = endAngle;
-              return slice;
-            })}
+        {showGridLines && yAxisTicks.map(tick => (
+          <line
+            key={tick.value}
+            x1={padding.left}
+            y1={tick.y}
+            x2={width - padding.right}
+            y2={tick.y}
+            stroke={gridLineColor}
+            strokeDasharray="5,5"
+          />
+        ))}
+        
+        {bars.map((bar, index) => (
+          <g key={index}>
+            <rect
+              x={bar.x}
+              y={height - padding.bottom}
+              width={bar.width}
+              height={0}
+              fill={hoveredBar === index ? highlightColor : `url(#${gradientId})`}
+              className="bar"
+              onMouseEnter={() => setHoveredBar(index)}
+              onMouseLeave={() => setHoveredBar(null)}
+            >
+              <animate
+                attributeName="height"
+                from="0"
+                to={bar.height}
+                dur={`${animationDuration}ms`}
+                fill="freeze"
+              />
+              <animate
+                attributeName="y"
+                from={height - padding.bottom}
+                to={bar.y}
+                dur={`${animationDuration}ms`}
+                fill="freeze"
+              />
+            </rect>
           </g>
-        </svg>
-      </div>
-      {hoveredSlice !== null && (
-        <div className="tooltip">
-          <FaInfoCircle style={{ marginRight: '5px' }} />
-          {data[hoveredSlice].label}: {((data[hoveredSlice].value / total) * 100).toFixed(1)}%
-        </div>
-      )}
+        ))}
+        
+        {showValues && bars.map((bar, index) => (
+          <text
+            key={index}
+            x={bar.x + bar.width / 2}
+            y={bar.y - 5}
+            textAnchor="middle"
+            fill={axisLabelColor}
+            fontSize={valueFontSize}
+            opacity={0}
+          >
+            <animate
+              attributeName="opacity"
+              from="0"
+              to="1"
+              dur={`${animationDuration}ms`}
+              fill="freeze"
+            />
+            {bar.value}
+          </text>
+        ))}
+        
+        {showLabels && bars.map((bar, index) => (
+          <text
+            key={index}
+            x={bar.x + bar.width / 2}
+            y={height - padding.bottom + 20}
+            textAnchor="middle"
+            fill={axisLabelColor}
+            fontSize={labelFontSize}
+          >
+            {bar.label}
+          </text>
+        ))}
+        
+        <line
+          x1={padding.left}
+          y1={height - padding.bottom}
+          x2={width - padding.right}
+          y2={height - padding.bottom}
+          stroke={axisColor}
+          strokeWidth={2}
+        />
+        
+        <line
+          x1={padding.left}
+          y1={padding.top}
+          x2={padding.left}
+          y2={height - padding.bottom}
+          stroke={axisColor}
+          strokeWidth={2}
+        />
+        
+        {yAxisTicks.map(tick => (
+          <text
+            key={tick.value}
+            x={padding.left - 10}
+            y={tick.y}
+            textAnchor="end"
+            fill={axisLabelColor}
+            fontSize={labelFontSize}
+          >
+            {tick.value.toFixed(0)}
+          </text>
+        ))}
+        
+        <text
+          x={width / 2}
+          y={height - 10}
+          textAnchor="middle"
+          fill={axisTitleColor}
+          fontSize={labelFontSize + 2}
+        >
+          {xAxisLabel}
+        </text>
+        
+        <text
+          x={-height / 2}
+          y={20}
+          textAnchor="middle"
+          fill={axisTitleColor}
+          fontSize={labelFontSize + 2}
+          transform="rotate(-90)"
+        >
+          {yAxisLabel}
+        </text>
+      </svg>
       <style jsx>{`
-        .chart-container {
+         .graph-container {
           display: flex;
           flex-direction: column;
-          color: white;
-          border-radius: 10px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          overflow: hidden;
-        }
-        .slice-path {
-          transition: transform 0.3s ease;
-        }
-        .slice:hover .slice-path {
-          transform: scale(1.05);
-        }
-        .slice-label, .slice-percentage {
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-        .slice:hover .slice-label, .slice:hover .slice-percentage {
-          opacity: 1;
-        }
-        .tooltip {
-          position: absolute;
-          background-color: rgba(0, 0, 0, 0.8);
-          color: white;
-          padding: 8px 12px;
-          border-radius: 6px;
-          font-size: 14px;
-          pointer-events: none;
-          top: 10px;
-          right: 10px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-          display: flex;
           align-items: center;
-          animation: fadeIn 0.3s ease;
+          justify-content: center;
+          height: 90vh;
+          color: var(--color-light);
+          padding: 2rem;
+          background-color: ${getCssVariableValue('--color-primary')} !important;
         }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
+        .graph-title {
+          font-size: ${titleFontSize}px;
+          font-weight: bold;
+          margin-bottom: 1.5rem;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        @keyframes rotateIn {
-          from { transform: rotate(-180deg) scale(0); opacity: 0; }
-          to { transform: rotate(0) scale(1); opacity: 1; }
+        .graph-content {
+          position: relative;
+          width: 100%;
+          max-width: ${width}px;
+          height: ${height}px;
+          border-radius: 1rem;
+          padding: 1.5rem;
+          border: 3px solid ${getCssVariableValue('--color-dark')};
+          box-shadow:  20px 20px 60px #0a0b0a,
+    -20px -20px 60px #121412;
         }
-        .slice {
-          animation: rotateIn 1s ease forwards;
+        .bar {
+          transition: fill 0.3s ease !important;
         }
       `}</style>
     </div>
   );
 };
 
-export default AnimatedPieChart;
+export default BarGraph;

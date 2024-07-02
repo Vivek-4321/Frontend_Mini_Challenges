@@ -326,7 +326,7 @@ const SnakeGame: React.FC = () => {
       </div>
         <Snake snakeDots={snakeDots} />
         <Food dot={food} />
-        {gameOver && <div className="game-over">Game Over</div>}
+        {gameOver && <div className="game-over-snake">Game Over</div>}
         <Controls resetGame={resetGame} />
       </div>
     </div>

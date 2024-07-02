@@ -5,7 +5,7 @@
     justify-content: center;
     height: 90vh;
     width: 100%;
-    background-color: var(--color-primary);
+    background-color: var(--color-primary) !important;
   }
   .progress-container {
     margin-top: -3rem;

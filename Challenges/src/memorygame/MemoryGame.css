@@ -1,0 +1,129 @@
+.poke-memory-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-primary);
+  height: 90vh;
+  padding: 20px;
+}
+
+.poke-memory-title {
+  margin-bottom: 20px;
+  color: var(--color-light);
+}
+
+.poke-memory-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  color: var(--color-light);
+  font-size: 18px;
+}
+
+.poke-memory-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 500px;
+  height: 20rem;
+  margin-bottom: 6rem;
+  margin-left: -2rem;
+}
+
+.poke-memory-card {
+  width: 8rem;
+  height: 5.8rem;
+  cursor: pointer;
+
+}
+
+.poke-card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.poke-memory-card.poke-flipped .poke-card-inner {
+  transform: rotateY(180deg);
+}
+
+.poke-card-front,
+.poke-card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.poke-card-front {
+  background-color: var(--color-dark);
+}
+
+.poke-card-back {
+  background-color: var(--color-primary);
+  border: 3px solid var(--color-dark);
+  transform: rotateY(180deg);
+}
+
+.poke-card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.poke-memory-card.poke-matched {
+  animation: poke-pulse 0.5s ease-in-out;
+}
+
+@keyframes poke-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.poke-memory-game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-light);
+  z-index: 10;
+}
+
+.poke-memory-reset-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.poke-memory-reset-button:hover {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .poke-memory-board {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

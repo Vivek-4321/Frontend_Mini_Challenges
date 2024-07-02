@@ -13,7 +13,6 @@ interface AnimatedPieChartProps {
   height?: number;
   title?: string;
   fontFamily?: string;
-  backgroundColor?: string;
   titleFontSize?: number;
   labelFontSize?: number;
   labelColor?: string;
@@ -21,6 +20,7 @@ interface AnimatedPieChartProps {
   percentageFontSize?: number;
   percentageColor?: string;
   sliceSpacing?: number;
+  showTitle?: boolean;
 }
 
 const AnimatedPieChart: React.FC<AnimatedPieChartProps> = ({
@@ -29,7 +29,6 @@ const AnimatedPieChart: React.FC<AnimatedPieChartProps> = ({
   height = 500,
   title = 'Sample Pie Chart',
   fontFamily = 'Arial, sans-serif',
-  backgroundColor = '#ffffff',
   titleFontSize = 24,
   labelFontSize = 12,
   labelColor = 'white',
@@ -37,21 +36,22 @@ const AnimatedPieChart: React.FC<AnimatedPieChartProps> = ({
   percentageFontSize = 14,
   percentageColor = 'white',
   sliceSpacing = 2,
+  showTitle = false,
 }) => {
   const [hoveredSlice, setHoveredSlice] = useState<number | null>(null);
 
   const total = data.reduce((sum, item) => sum + item.value, 0);
-  const chartSize = Math.min(width, height) - 80; // Reduce size to ensure fitting
+  const chartSize = Math.min(width, height) - 80;
   const radius = chartSize / 2;
-  const center = { x: width / 2, y: (height / 2) - 41 }; // Move center down slightly
+  const center = { x: width / 2, y: height / 2 };
 
   let startAngle = 0;
 
   return (
-    <div className="chart-container" style={{ backgroundColor, fontFamily, width, height }}>
-      <h2 className="chart-title" style={{ fontSize: titleFontSize, color: '#000000' }}>{title}</h2>
-      <svg width={width} height={height - titleFontSize - 20}>
-        <g transform={`translate(${center.x}, ${center.y})`}>
+    <div className="chart-container">
+      {showTitle && <h2 className="chart-title">{title}</h2>}
+      <svg width={width} height={height}>
+        <g className="pie-slices" transform={`translate(${center.x}, ${center.y})`}>
           {data.map((item, index) => {
             const percentage = item.value / total;
             const endAngle = startAngle + percentage * 360;
@@ -78,7 +78,7 @@ const AnimatedPieChart: React.FC<AnimatedPieChartProps> = ({
                 <path
                   d={pathData}
                   fill={item.color}
-                  stroke={backgroundColor}
+                  stroke="var(--color-primary)"
                   strokeWidth={sliceSpacing}
                   className="slice-path"
                 />
@@ -123,17 +123,25 @@ const AnimatedPieChart: React.FC<AnimatedPieChartProps> = ({
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: flex-start;
-          padding: 1rem;
-          color: black;
-          position: relative;
-          border-radius: 10px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          justify-content: center;
+          height: 100%;
+          width: 100%;
+          font-family: ${fontFamily};
+          background-color: var(--color-primary);
+          color: var(--color-light);
+          padding: 2rem;
+        }
+
+        .pie-slices {
+          box-shadow:  20px 20px 60px #0a0b0a,
+    -20px -20px 60px #121412;
         }
         .chart-title {
+          font-size: ${titleFontSize}px;
           font-weight: bold;
-          margin-bottom: 0.5rem;
-          text-shadow: 0 2px 4px rgba(255,255,255,0.2);
+          margin-bottom: 1rem;
+          color: var(--color-light);
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         .slice-path {
           transition: transform 0.3s ease;
@@ -151,7 +159,7 @@ const AnimatedPieChart: React.FC<AnimatedPieChartProps> = ({
         .tooltip {
           position: absolute;
           background-color: rgba(0, 0, 0, 0.8);
-          color: white;
+          color: var(--color-light);
           padding: 8px 12px;
           border-radius: 6px;
           font-size: 14px;

@@ -1,0 +1,138 @@
+.connect-four {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-primary);
+    height: 90vh;
+    width: 100%;
+    padding: 20px;
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 0.5rem;
+      color: var(--color-light);
+    }
+
+  }
+  
+ 
+  
+  .board-container {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .board {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    background-color: var(--color-dark);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .current-player p{
+    font-size: 14px !important;
+  }
+  
+  .cell {
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    
+  }
+  
+  .cell:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .piece {
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  .piece.red {
+    color: #ff6b6b;
+  }
+  
+  .piece.yellow {
+    color: #feca57;
+  }
+  
+  .cell.winning .piece {
+    animation: pulse 1s ease-in-out infinite;
+  }
+  
+  .cell.dropping .piece {
+    animation: drop 0.5s ease-in-out;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  @keyframes drop {
+    0% { transform: translateY(calc(-100% - var(--drop-distance))); }
+    100% { transform: translateY(0); }
+  }
+  
+  .winner-message, .current-player {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--color-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .reset-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .reset-button:hover {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    transform: scale(1.05);
+  }
+  
+  .strike-line {
+    position: absolute;
+    height: 5px;
+    background-color: var(--color-light);
+    transform-origin: left center;
+    transition: width 0.5s ease-out;
+    width: 0;
+  }
+  
+  @media (max-width: 600px) {
+    .board {
+      gap: 5px;
+    }
+  
+    .cell {
+      width: 50px;
+      height: 50px;
+    }
+  }

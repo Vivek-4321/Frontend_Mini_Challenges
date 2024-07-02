@@ -38,7 +38,7 @@
 box-shadow: 0px 0px 6px 1px rgba(231,14,50,1);
 }
 
-.game-over {
+.game-over-snake {
     position: absolute;
     top: 50%;
     font-weight: 600;
@@ -48,12 +48,12 @@ box-shadow: 0px 0px 6px 1px rgba(231,14,50,1);
     
 }
 
-.controls {
+.controls-snake {
     position: absolute;
     bottom: 20px;
 }
 
-.controls button {
+.controls-snake button {
     background-color: var(--color-primary);
     color: var(--color-text);
     outline: none;
