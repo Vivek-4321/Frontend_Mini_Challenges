@@ -46,6 +46,7 @@ import DataStructure from "./datastructure/DataStructure.tsx";
 import SplitPaneWrapper from "./splitpane/SplitPaneWrapper.tsx";
 import SudokuSolver from "./sudokusolver/SudokuSolver.tsx";
 import AudioPlayerWrapper from "./audioplayer/AudioPlayerWrapper.tsx";
+import TextEditorWrapper from "./texteditor/TextEditorWrapper.tsx";
 
 function App() {
   const data = [
@@ -118,6 +119,7 @@ function App() {
           <Route path="/splitpane" element={<SplitPaneWrapper />} />
           <Route path="/sudoku" element={<SudokuSolver />} />
           <Route path="/audioplayer" element={<AudioPlayerWrapper />} />
+          <Route path="/texteditor" element={<TextEditorWrapper />} />
           <Route
             path="/bargraph"
             element={
