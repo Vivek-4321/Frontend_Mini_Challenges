@@ -18,14 +18,19 @@ const TextEditor: React.FC = () => {
   const insertImage = () => {
     const url = prompt('Enter the image URL');
     if (url) {
+      const imgContainer = document.createElement('div');
+      imgContainer.className = 'resizable draggable';
+      imgContainer.style.position = 'relative';
+      imgContainer.style.display = 'inline-block';
+
       const img = document.createElement('img');
       img.src = url;
-      img.className = 'resizable draggable';
       img.style.maxWidth = '200px';
-      img.style.display = 'inline-block';
-      editorRef.current?.appendChild(img);
-      setResizeListeners(img);
-      setDragListeners(img);
+      imgContainer.appendChild(img);
+
+      editorRef.current?.appendChild(imgContainer);
+      setResizeListeners(imgContainer);
+      setDragListeners(imgContainer);
     }
   };
 
@@ -38,23 +43,18 @@ const TextEditor: React.FC = () => {
     }
   };
 
-  const setResizeListeners = (element: HTMLImageElement) => {
-    const resizers = document.createElement('div');
-    resizers.className = 'resizers';
-
+  const setResizeListeners = (element: HTMLDivElement) => {
     const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+
     positions.forEach(position => {
       const resizer = document.createElement('div');
       resizer.className = `resizer ${position}`;
-      resizer.addEventListener('mousedown', (e) => initResize(e, element));
-      resizers.appendChild(resizer);
+      resizer.addEventListener('mousedown', (e) => initResize(e, element, position));
+      element.appendChild(resizer);
     });
-
-    element.style.position = 'relative';
-    element.parentNode?.insertBefore(resizers, element.nextSibling);
   };
 
-  const initResize = (e: MouseEvent, element: HTMLImageElement) => {
+  const initResize = (e: MouseEvent, element: HTMLDivElement, position: string) => {
     e.preventDefault();
     const startX = e.clientX;
     const startY = e.clientY;
@@ -62,8 +62,20 @@ const TextEditor: React.FC = () => {
     const startHeight = element.offsetHeight;
 
     const doDrag = (e: MouseEvent) => {
-      element.style.width = startWidth + (e.clientX - startX) + 'px';
-      element.style.height = startHeight + (e.clientY - startY) + 'px';
+      if (position.includes('right')) {
+        element.style.width = startWidth + (e.clientX - startX) + 'px';
+      }
+      if (position.includes('left')) {
+        element.style.width = startWidth - (e.clientX - startX) + 'px';
+        element.style.left = startX + (e.clientX - startX) + 'px';
+      }
+      if (position.includes('bottom')) {
+        element.style.height = startHeight + (e.clientY - startY) + 'px';
+      }
+      if (position.includes('top')) {
+        element.style.height = startHeight - (e.clientY - startY) + 'px';
+        element.style.top = startY + (e.clientY - startY) + 'px';
+      }
     };
 
     const stopDrag = () => {
@@ -75,8 +87,9 @@ const TextEditor: React.FC = () => {
     document.documentElement.addEventListener('mouseup', stopDrag, false);
   };
 
-  const setDragListeners = (element: HTMLImageElement) => {
+  const setDragListeners = (element: HTMLDivElement) => {
     element.addEventListener('mousedown', (e) => {
+      if ((e.target as HTMLElement).classList.contains('resizer')) return;
       e.preventDefault();
       const shiftX = e.clientX - element.getBoundingClientRect().left;
       const shiftY = e.clientY - element.getBoundingClientRect().top;
@@ -104,8 +117,11 @@ const TextEditor: React.FC = () => {
     const images = editorRef.current?.getElementsByTagName('img');
     if (images) {
       Array.from(images).forEach(img => {
-        setResizeListeners(img);
-        setDragListeners(img);
+        const imgContainer = img.parentElement;
+        if (imgContainer) {
+          setResizeListeners(imgContainer as HTMLDivElement);
+          setDragListeners(imgContainer as HTMLDivElement);
+        }
       });
     }
   }, []);
