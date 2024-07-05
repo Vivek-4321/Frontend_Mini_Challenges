@@ -1,154 +1,84 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './TextEditor.css';
 
-const TextEditor: React.FC = () => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const [content, setContent] = useState<string>('');
+const Editor: React.FC = () => {
+    const [content, setContent] = useState('');
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const editorRef = useRef<HTMLDivElement | null>(null);
 
-  const execCommand = (command: string, value: string = '') => {
-    document.execCommand(command, false, value);
-  };
-
-  const handleContentChange = () => {
-    if (editorRef.current) {
-      setContent(editorRef.current.innerHTML);
-    }
-  };
-
-  const insertImage = () => {
-    const url = prompt('Enter the image URL');
-    if (url) {
-      const imgContainer = document.createElement('div');
-      imgContainer.className = 'resizable draggable';
-      imgContainer.style.position = 'relative';
-      imgContainer.style.display = 'inline-block';
-
-      const img = document.createElement('img');
-      img.src = url;
-      img.style.maxWidth = '200px';
-      imgContainer.appendChild(img);
-
-      editorRef.current?.appendChild(imgContainer);
-      setResizeListeners(imgContainer);
-      setDragListeners(imgContainer);
-    }
-  };
-
-  const insertCode = () => {
-    const code = prompt('Enter your code');
-    if (code) {
-      const pre = document.createElement('pre');
-      pre.textContent = code;
-      editorRef.current?.appendChild(pre);
-    }
-  };
-
-  const setResizeListeners = (element: HTMLDivElement) => {
-    const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
-
-    positions.forEach(position => {
-      const resizer = document.createElement('div');
-      resizer.className = `resizer ${position}`;
-      resizer.addEventListener('mousedown', (e) => initResize(e, element, position));
-      element.appendChild(resizer);
-    });
-  };
-
-  const initResize = (e: MouseEvent, element: HTMLDivElement, position: string) => {
-    e.preventDefault();
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const startWidth = element.offsetWidth;
-    const startHeight = element.offsetHeight;
-
-    const doDrag = (e: MouseEvent) => {
-      if (position.includes('right')) {
-        element.style.width = startWidth + (e.clientX - startX) + 'px';
-      }
-      if (position.includes('left')) {
-        element.style.width = startWidth - (e.clientX - startX) + 'px';
-        element.style.left = startX + (e.clientX - startX) + 'px';
-      }
-      if (position.includes('bottom')) {
-        element.style.height = startHeight + (e.clientY - startY) + 'px';
-      }
-      if (position.includes('top')) {
-        element.style.height = startHeight - (e.clientY - startY) + 'px';
-        element.style.top = startY + (e.clientY - startY) + 'px';
-      }
+    const formatText = (command: string, value?: string) => {
+        document.execCommand(command, false, value);
     };
 
-    const stopDrag = () => {
-      document.documentElement.removeEventListener('mousemove', doDrag, false);
-      document.documentElement.removeEventListener('mouseup', stopDrag, false);
-    };
-
-    document.documentElement.addEventListener('mousemove', doDrag, false);
-    document.documentElement.addEventListener('mouseup', stopDrag, false);
-  };
-
-  const setDragListeners = (element: HTMLDivElement) => {
-    element.addEventListener('mousedown', (e) => {
-      if ((e.target as HTMLElement).classList.contains('resizer')) return;
-      e.preventDefault();
-      const shiftX = e.clientX - element.getBoundingClientRect().left;
-      const shiftY = e.clientY - element.getBoundingClientRect().top;
-
-      const moveAt = (pageX: number, pageY: number) => {
-        element.style.left = pageX - shiftX + 'px';
-        element.style.top = pageY - shiftY + 'px';
-      };
-
-      const onMouseMove = (e: MouseEvent) => {
-        moveAt(e.pageX, e.pageY);
-      };
-
-      document.addEventListener('mousemove', onMouseMove);
-
-      document.addEventListener('mouseup', () => {
-        document.removeEventListener('mousemove', onMouseMove);
-      }, { once: true });
-    });
-
-    element.ondragstart = () => false;
-  };
-
-  useEffect(() => {
-    const images = editorRef.current?.getElementsByTagName('img');
-    if (images) {
-      Array.from(images).forEach(img => {
-        const imgContainer = img.parentElement;
-        if (imgContainer) {
-          setResizeListeners(imgContainer as HTMLDivElement);
-          setDragListeners(imgContainer as HTMLDivElement);
+    const insertImage = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
         }
-      });
-    }
-  }, []);
+    };
 
-  return (
-    <div className="text-editor-container">
-      <div className="toolbar">
-        <button onClick={() => execCommand('bold')}>Bold</button>
-        <button onClick={() => execCommand('italic')}>Italic</button>
-        <button onClick={() => execCommand('underline')}>Underline</button>
-        <button onClick={() => execCommand('insertUnorderedList')}>Bullet List</button>
-        <button onClick={() => execCommand('formatBlock', 'h1')}>Heading</button>
-        <button onClick={insertImage}>Image</button>
-        <button onClick={insertCode}>Code</button>
-      </div>
-      <div
-        className="editor"
-        contentEditable
-        ref={editorRef}
-        onInput={handleContentChange}
-      ></div>
-      <div className="output">
-        <h2>Output HTML:</h2>
-        <pre>{content}</pre>
-      </div>
-    </div>
-  );
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = `<img src="${e.target?.result as string}" style="max-width: 100%; display: block;" />`;
+                formatText('insertHTML', img);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleContentChange = () => {
+        if (editorRef.current) {
+            setContent(editorRef.current.innerHTML);
+        }
+    };
+
+    const setImageStyle = (style: string) => {
+        const selection = window.getSelection();
+        if (selection?.rangeCount) {
+            const range = selection.getRangeAt(0);
+            const selectedNode = range.commonAncestorContainer as HTMLElement;
+            if (selectedNode && selectedNode.tagName === 'IMG') {
+                selectedNode.style.cssText = style;
+            }
+        }
+    };
+
+    return (
+        <div>
+            <div className="toolbar">
+                <button onClick={() => formatText('bold')}>Bold</button>
+                <button onClick={() => formatText('italic')}>Italic</button>
+                <button onClick={() => formatText('underline')}>Underline</button>
+                <button onClick={() => formatText('justifyLeft')}>Left</button>
+                <button onClick={() => formatText('justifyCenter')}>Center</button>
+                <button onClick={() => formatText('justifyRight')}>Right</button>
+                <button onClick={insertImage}>Insert Image</button>
+                <button onClick={() => setImageStyle('float: left; margin: 0 10px 10px 0;')}>Image Left</button>
+                <button onClick={() => setImageStyle('display: block; margin: 0 auto;')}>Image Center</button>
+                <button onClick={() => setImageStyle('float: right; margin: 0 0 10px 10px;')}>Image Right</button>
+                <button onClick={() => formatText('insertHTML', '<pre><code></code></pre>')}>Code</button>
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: 'none' }}
+                    onChange={handleFileChange}
+                />
+            </div>
+            <div
+                className="editor-content"
+                ref={editorRef}
+                contentEditable
+                onInput={handleContentChange}
+                dangerouslySetInnerHTML={{ __html: content }}
+            ></div>
+            <div className="output">
+                <h3>Output HTML</h3>
+                <div dangerouslySetInnerHTML={{ __html: content }}></div>
+            </div>
+        </div>
+    );
 };
 
-export default TextEditor;
+export default Editor;
