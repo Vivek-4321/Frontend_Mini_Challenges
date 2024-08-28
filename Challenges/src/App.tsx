@@ -88,7 +88,6 @@ function App() {
 
   return (
     <>
-      <ToastProvider>
         <BrowserRouter>
           <Navbar />
           <Routes>
@@ -170,7 +169,6 @@ function App() {
             <Route path="/videoplayer" element={<Wrapper />} />
           </Routes>
         </BrowserRouter>
-      </ToastProvider>
     </>
   );
 }
