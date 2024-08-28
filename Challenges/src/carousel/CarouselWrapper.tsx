@@ -24,7 +24,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <h1>Smooth Sliding Carousel with Adjacent Images</h1>
-      <Carousel items={carouselItems} />
+      <Carousel data={carouselItems} />
     </div>
   );
 };

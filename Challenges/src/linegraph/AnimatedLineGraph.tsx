@@ -323,11 +323,11 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
           )}
         </svg>
         {showCurrentValue && data.length > 0 && (
-          <div className="current-value">
+          <div className="l-current-value">
             {data.length > 1 && data[data.length - 1].value > data[data.length - 2].value ? (
-              <FiArrowUp className="arrow up" />
+              <FiArrowUp className="arrow-up" />
             ) : (
-              <FiArrowDown className="arrow down" />
+              <FiArrowDown className="arrow-down" />
             )}
             <span className="value-text">
               {data[data.length - 1]?.value.toFixed(2) || '0.00'}
@@ -392,7 +392,7 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
           font-weight: bold;
           text-anchor: middle;
         }
-        .current-value {
+        .l-current-value {
           position: absolute;
           top: 1rem;
           right: 1rem;
@@ -407,10 +407,10 @@ const AnimatedLineGraph: React.FC<AnimatedLineGraphProps> = ({
           margin-right: 0.5rem;
           font-size: 1.2rem;
         }
-        .arrow.up {
+        .arrow-up {
           color: #4CAF50;
         }
-        .arrow.down {
+        .arrow-down {
           color: #f44336;
         }
         .value-text {

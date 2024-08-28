@@ -1,0 +1,32 @@
+.custom-dnd-draggable {
+    position: absolute;
+    user-select: none;
+    cursor: move;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 8px;
+    transition: transform 0.1s ease-out;
+  }
+  
+  .custom-dnd-draggable.custom-dnd-dragging {
+    opacity: 0.8;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-dnd-drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    background-color: #f0f0f0;
+    cursor: grab;
+  }
+  
+  .custom-dnd-draggable.custom-dnd-dragging .custom-dnd-drag-handle {
+    cursor: grabbing;
+  }
+  
+  .custom-dnd-draggable-content {
+    padding: 8px 0;
+  }

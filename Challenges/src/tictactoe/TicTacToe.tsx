@@ -92,7 +92,7 @@ const TicTacToe = () => {
     <div className="game">
       <h1>Tic Tac Toe</h1>
       <div className="board-container">
-        <div className="board" ref={boardRef}>
+        <div className="ttt-board" ref={boardRef}>
           {board.map((_, index) => renderSquare(index))}
         </div>
         <div className="strike-line" ref={lineRef}></div>
