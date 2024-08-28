@@ -1,6 +1,8 @@
 import React from "react";
 import "./Navbar.css";
 import githubLink from "./assets/github.webp";
+import "./index.css";
+
 
 function Navbar() {
   return (

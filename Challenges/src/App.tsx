@@ -49,6 +49,7 @@ import AudioPlayerWrapper from "./audioplayer/AudioPlayerWrapper.tsx";
 import TextEditorWrapper from "./texteditor/TextEditorWrapper.tsx";
 import { ToastProvider } from "./toast/ToastContext.tsx";
 import CustomDraggableWrapper from "./custom_draggable/CustomDraggableWrapper.tsx";
+import "./index.css";
 
 function App() {
   const data = [
