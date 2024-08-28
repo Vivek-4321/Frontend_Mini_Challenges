@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
-import "./index.css"
 
 const routes = [
   { path: "/counter", name: "Counter" },
@@ -57,7 +56,7 @@ function Home() {
       <h1>Welcome to the React Component Showcase</h1>
       <section className="home_card__container">
         {routes.map((route) => (
-          <Link to={route.path} key={route.path} className="card">
+          <Link to={route.path} key={route.path} className="home_card">
             <div className="home_card__content">
               <h2>{route.name}</h2>
             </div>
