@@ -56,7 +56,7 @@ function Home() {
       <h1>Welcome to the React Component Showcase</h1>
       <section className="home_card__container">
         {routes.map((route) => (
-          <Link to={route.path} key={route.path} className="home_card">
+          <Link to={route.path} key={route.path} className="card">
             <div className="home_card__content">
               <h2>{route.name}</h2>
             </div>

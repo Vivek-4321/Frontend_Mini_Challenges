@@ -1,51 +1,31 @@
-.home {
-    height: 170vh;
+.home{
+    height: 100vh;
     background-color: var(--color-primary);
-    color: var(--color-light);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
+  color: var(--color-light);
+}
+
   
   .home_card__container {
     display: grid;
     padding: 3rem;
-    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
   }
   
   .home_card {
-    background-color: var(--color-primary);
-    border: 2px solid var(--color-dark);
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 20px;
     text-decoration: none;
-    color: var(--color-light) !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
+    color: #333;
+    transition: transform 0.3s ease;
   }
   
   .home_card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .home_card__content {
-    padding: 20px;
+    transform: translateY(-5px);
   }
   
   .home_card__content h2 {
     margin: 0;
-    font-size: 20px;
-    text-align: center;
+    font-size: 18px;
   }
-  
-  .home h1 {
-    margin-bottom: 2rem;
-    font-size: 32px;
-    color: var(--color-light);
-    text-align: center;
-  }
-  
